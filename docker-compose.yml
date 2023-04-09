@@ -1,0 +1,42 @@
+version: "3.8"
+
+services:
+  producer:
+    build: app/producer
+    ports:
+      - "8000:8000"
+    depends_on:
+      - queue
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_USER=guest
+      - RABBITMQ_PASS=guest
+      - RABBITMQ_QUEUE_NAME=my_queue
+
+  consumer:
+    build: app/consumer
+    depends_on:
+      - queue
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_USER=guest
+      - RABBITMQ_PASS=guest
+      - RABBITMQ_QUEUE_NAME=my_queue
+      - CSV_FILE_PATH=/app/output/data.csv
+    volumes:
+      - ./output:/app/output
+
+  queue:
+    image: rabbitmq:3-management
+    hostname: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 5s
+      timeout: 20s
+      retries: 5
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
