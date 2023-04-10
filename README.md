@@ -30,7 +30,7 @@ This will start the producer, consumer, and RabbitMQ queue.
 curl --header "Content-Type: application/json" \
      --request POST \
      --data '{"device_id": "device1", "client_id": "client1", "created_at": "2023-02-07 14:56:49.386042", "data": {"license_id": "license1", "preds": [{"image_frame": "image1", "prob": 0.5, "tags": ["tag1", "tag2"]}, {"image_frame": "image2", "prob": 0.1, "tags": ["tag3", "tag4"]}]}}' \
-     http://localhost:8000/
+     http://localhost:8000/produce
 ```
 
 4. Check the output CSV file
