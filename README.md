@@ -36,7 +36,7 @@ curl --header "Content-Type: application/json" \
 4. Check the output CSV file
 
 ```bash
-cat consumer/output/data.csv
+cat output/data.csv
 ```
 
 ## Testing
